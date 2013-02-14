@@ -35,31 +35,49 @@
          var objEv = event;
          alert(objEv.latLng.lat() + ', ' + objEv.latLng.lng()); 
 
-             var pathsPoly;
-            var arrPoints = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0]]; 
+             var pathsPoly; // first inner bracket
+             var pathsPoly2; // outerbracket
 
-            numP = 0.002;
-                        
-   
-            arrPoints[0][0] = event.latLng.lat() - numP;
-            arrPoints[0][1] = event.latLng.lng() + numP;
-            arrPoints[1][0] = event.latLng.lat() + numP;
-            arrPoints[1][1] = event.latLng.lng() + numP;
-            arrPoints[2][0] = event.latLng.lat() + numP;
-            arrPoints[2][1] = event.latLng.lng() + numP;
-            arrPoints[3][0] = event.latLng.lat() + numP;
-            arrPoints[3][1] = event.latLng.lng() - numP;
-            arrPoints[4][0] = event.latLng.lat() - numP;
-            arrPoints[4][1] = event.latLng.lng() - numP;
-            arrPoints[5][0] = event.latLng.lat() - numP;
-            arrPoints[5][1] = event.latLng.lng() + numP;
+            numP1 = 0.001;
+            numP2 = 0.004;            
+      
+         pathsPoly = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP1); 
+
+         pathsPoly2 = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP2);
+
+         polyPoints = new google.maps.Polygon({ path: pathsPoly, strokeColor: "#3AA7DB", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DB", fillOpacity: 0.35 });
+
+         polyPoints2 = new google.maps.Polygon({ path: pathsPoly2, strokeColor: "#3AA7DF", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DF", fillOpacity: 0.35 });
+
+         polyPoints.setMap(map);
+         polyPoints2.setMap(map);
+         // get the hex
+         }
+
+         function makePaths(lat,lng,numP)
+         {// create an aarry object
+
+            var arrPoints = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0]]; 
+            arrPoints[0][0] = lat - numP;
+            arrPoints[0][1] = lng + numP;
+            arrPoints[1][0] = lat + numP;
+            arrPoints[1][1] = lng + numP;
+            arrPoints[2][0] = lat + numP;
+            arrPoints[2][1] = lng + numP;
+            arrPoints[3][0] = lat + numP;
+            arrPoints[3][1] = lng - numP;
+            arrPoints[4][0] = lat - numP;
+            arrPoints[4][1] = lng - numP;
+            arrPoints[5][0] = lat - numP;
+            arrPoints[5][1] = lng + numP;
 
             for(var i in arrPoints)
             {
-               console.log("PointX: " + arrPoints[i][0]);
-               console.log("PointY: " + arrPoints[i][1]);
+               console.log(i + " PointX: " + arrPoints[i][0]);
+               console.log(i + " PointY: " + arrPoints[i][1]);
+              //  pathsPoly = new google.maps.LatLng(arrPoints[i][0],arrPoints[i][1])
             }
-            pathsPoly = 
+             pathsPoly = 
             [
                new google.maps.LatLng(arrPoints[0][0],arrPoints[0][1]),
                new google.maps.LatLng(arrPoints[1][0],arrPoints[1][1]),
@@ -68,12 +86,9 @@
                new google.maps.LatLng(arrPoints[4][0],arrPoints[4][1]),
                new google.maps.LatLng(arrPoints[5][0],arrPoints[5][1]),
             ]
-
-         polyPoints = new google.maps.Polygon({ path: pathsPoly, strokeColor: "#3AA7DB", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DB", fillOpacity: 0.35 });
-
-         polyPoints.setMap(map);
-         // get the hex
+             return pathsPoly;
          }
+
 /*
          function producePoints(objLatLong)
          {
