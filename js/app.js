@@ -1,6 +1,16 @@
+/*
+   app.js 
+   Kevin Kelly
+   Project Talon
+   02/13/13
+*/
 /* ////// VARS /////////////////////////////////////////////////////////////////////////////// */
-    var map;
+         var map;
          var arrHole = new Array(); 
+         var conThing; // Confirm
+         var numToken = 0;
+/* ////// FUNCTIONS ////////////////////////////////////////////////////////////////////////// */
+
          function initialize() 
          {
 
@@ -16,32 +26,46 @@
               google.maps.event.addListener(map,'click',showCoords);
         }
 
-           function showCoords(event) {
-   //document.getElementById('latlongclicked').value = event.latLng.lat() + ', ' + event.latLng.lng()
-         var objEv = event;
-         alert(objEv.latLng.lat() + ', ' + objEv.latLng.lng()); 
+         function showCoords(event) 
+         {
+            
+            var objEv = event;// dummy object
+            var pathsPoly; // first inner bracket which is probably a minute in. 
+            var pathsPoly2; // outerbracket
+            
+            alert(objEv.latLng.lat() + ', ' + objEv.latLng.lng()); 
+            if(numToken == 0)
+            {
+               conThing=confirm("Is this the position you'd like to go to?");
+            
+               if(conThing == true)
+               {// if this is
+                  numP1 = 0.008;
+                  numP2 = 0.060;            
+                  numToken ++;
+                  alert(numToken);
+                  pathsPoly = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP1); 
 
-             var pathsPoly; // first inner bracket
-             var pathsPoly2; // outerbracket
+                  pathsPoly2 = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP2);
+                  polyPoints = new google.maps.Polygon({ path: pathsPoly, strokeColor: "#3AA7DB", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DB", fillOpacity: 0.35 });
+                  polyPoints2 = new google.maps.Polygon({ path: pathsPoly2, strokeColor: "#3AA7DF", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DF", fillOpacity: 0.35 });
 
-            numP1 = 0.008;
-            numP2 = 0.060;            
-      
-         pathsPoly = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP1); 
-
-         pathsPoly2 = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP2);
-
-         polyPoints = new google.maps.Polygon({ path: pathsPoly, strokeColor: "#3AA7DB", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DB", fillOpacity: 0.35 });
-
-         polyPoints2 = new google.maps.Polygon({ path: pathsPoly2, strokeColor: "#3AA7DF", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DF", fillOpacity: 0.35 });
-
-         polyPoints.setMap(map);
-         polyPoints2.setMap(map);
+                  // Initiate map
+                  polyPoints.setMap(map);
+                  polyPoints2.setMap(map);   
+               }else{
+                alert("Please choose another location.");  
+               }
+            
+            }else{
+               
+            }
+         
          // get the hex
          }
 
          function makePaths(lat,lng,numP)
-         {// create an aarry object: latitude, longitude, and multiple. 
+         {// create an aarry object: latitude, longitude, and multiple for distance. 
 
             var arrPoints = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0]]; 
             arrPoints[0][0] = lat - numP;
@@ -71,12 +95,14 @@
                new google.maps.LatLng(arrPoints[3][0],arrPoints[3][1]),
                new google.maps.LatLng(arrPoints[4][0],arrPoints[4][1]),
                new google.maps.LatLng(arrPoints[5][0],arrPoints[5][1]),
+               new google.maps.LatLng(arrPoints[0][0],arrPoints[0][1])
             ]
              return pathsPoly;
          }
 
+// Run Once Functions 
 
-/*
+/* BB Code
    function ready() {
          var ele = document.createElement("div");
          ele.innerHTML = "uuid: " + blackberry.identity.uuid;
@@ -100,3 +126,5 @@
          blackberry.message.sms.isListeningForMessage - false;
       }
 */
+
+/// Run Once 
