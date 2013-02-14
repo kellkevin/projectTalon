@@ -27,7 +27,7 @@
         }
 
          function showCoords(event) 
-         {
+         { // [ Shows the Coords, but really used to set the position]
             
             var objEv = event;// dummy object
             var pathsPoly; // first inner bracket which is probably a minute in. 
@@ -35,11 +35,11 @@
             
             alert(objEv.latLng.lat() + ', ' + objEv.latLng.lng()); 
             if(numToken == 0)
-            {
+            {// numToken shows that the app is on or off. 
                conThing=confirm("Is this the position you'd like to go to?");
-            
+               
                if(conThing == true)
-               {// if this is
+               {// if the user chooses to go here, 
                   numP1 = 0.008;
                   numP2 = 0.060;            
                   numToken ++;
@@ -47,6 +47,7 @@
                   pathsPoly = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP1); 
 
                   pathsPoly2 = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP2);
+                  
                   polyPoints = new google.maps.Polygon({ path: pathsPoly, strokeColor: "#3AA7DB", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DB", fillOpacity: 0.35 });
                   polyPoints2 = new google.maps.Polygon({ path: pathsPoly2, strokeColor: "#3AA7DF", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DF", fillOpacity: 0.35 });
 
@@ -54,15 +55,22 @@
                   polyPoints.setMap(map);
                   polyPoints2.setMap(map);   
                }else{
-                alert("Please choose another location.");  
                }
             
             }else{
-               
+               conThing=confirm("You've already set a position. Would you like choose another?");
+               {
+                  if(conThing == true) {
+                     alert("Resetting positions..."); 
+                     initialize();
+                  }else{
+                     alert("Let's continue, then.");
+                  } 
             }
          
          // get the hex
          }
+      }
 
          function makePaths(lat,lng,numP)
          {// create an aarry object: latitude, longitude, and multiple for distance. 
@@ -100,7 +108,8 @@
              return pathsPoly;
          }
 
-// Run Once Functions 
+// [Run Once Functions] /////////////////////////////////////////////////////
+
 
 /* BB Code
    function ready() {
@@ -127,4 +136,4 @@
       }
 */
 
-/// Run Once 
+/* RUN ONCE ////////////////////////////////////////////////////////////////// */
