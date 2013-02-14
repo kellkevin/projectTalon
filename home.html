@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>Hello World</title>
+</head>
+<body onload="initialize()">
+  
+   <div id="map" style="width: 230px; height: 230px;"></div> 
+   <script src="local:///chrome/webworks.js" type="text/javascript"></script>
+  <!--  <script src="js/app.js"></script> -->
+  <!--  <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>  -->
+   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+      
+      <script type="text/javascript">  
+         var map;
+         var arrHole = new Array(); 
+         function initialize() 
+         {
+
+          var latlng = new google.maps.LatLng(43.65352, -79.38391);
+          var myOptions = {
+            zoom: 10,
+            center: latlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+          };
+           map = new google.maps.Map(document.getElementById("map"),
+              myOptions);
+
+              google.maps.event.addListener(map,'click',showCoords);
+        }
+
+           function showCoords(event) {
+   //document.getElementById('latlongclicked').value = event.latLng.lat() + ', ' + event.latLng.lng()
+         var objEv = event;
+         alert(objEv.latLng.lat() + ', ' + objEv.latLng.lng()); 
+
+             var pathsPoly;
+            var arrPoints = [[0,0],[1,0],[2,0],[3,0],[4,0],[5,0]]; 
+
+            numP = 0.002;
+                        
+   
+            arrPoints[0][0] = event.latLng.lat() - numP;
+            arrPoints[0][1] = event.latLng.lng() + numP;
+            arrPoints[1][0] = event.latLng.lat() + numP;
+            arrPoints[1][1] = event.latLng.lng() + numP;
+            arrPoints[2][0] = event.latLng.lat() + numP;
+            arrPoints[2][1] = event.latLng.lng() + numP;
+            arrPoints[3][0] = event.latLng.lat() + numP;
+            arrPoints[3][1] = event.latLng.lng() - numP;
+            arrPoints[4][0] = event.latLng.lat() - numP;
+            arrPoints[4][1] = event.latLng.lng() - numP;
+            arrPoints[5][0] = event.latLng.lat() - numP;
+            arrPoints[5][1] = event.latLng.lng() + numP;
+
+            for(var i in arrPoints)
+            {
+               console.log("PointX: " + arrPoints[i][0]);
+               console.log("PointY: " + arrPoints[i][1]);
+            }
+            pathsPoly = 
+            [
+               new google.maps.LatLng(arrPoints[0][0],arrPoints[0][1]),
+               new google.maps.LatLng(arrPoints[1][0],arrPoints[1][1]),
+               new google.maps.LatLng(arrPoints[2][0],arrPoints[2][1]),
+               new google.maps.LatLng(arrPoints[3][0],arrPoints[3][1]),
+               new google.maps.LatLng(arrPoints[4][0],arrPoints[4][1]),
+               new google.maps.LatLng(arrPoints[5][0],arrPoints[5][1]),
+            ]
+
+         polyPoints = new google.maps.Polygon({ path: pathsPoly, strokeColor: "#3AA7DB", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DB", fillOpacity: 0.35 });
+
+         polyPoints.setMap(map);
+         // get the hex
+         }
+/*
+         function producePoints(objLatLong)
+         {
+            // Create six sides from the center. 
+            var numLat, numLng;
+            var pathsPoly;
+            var arrPoints = new Array(); 
+
+                     
+   
+            arrPoints[0][0] = objLatLong.latLng.lat() - .05;
+            arrPoints[0][1] = objLatLong.latLng.lng() + .05;
+            arrPoints[1][0] = [objLatLong].latLng.lat() + .05;
+            arrPoints[1][1] =  [objLatLong].latLng.lng() + .05;
+            arrPoints[2][0] = [objLatLong].latLng.lat() + .05;
+            arrPoints[2][1] = [objLatLong].latLng.lng() + .00;
+            arrPoints[3][0] = [objLatLong].latLng.lat() + .05;
+            arrPoints[3][1] = [objLatLong].latLng.lng() - .05;
+            arrPoints[4][0] = [objLatLong].latLng.lat() - .05;
+            arrPoints[4][1] = [objLatLong].latLng.lng() - .05;
+            arrPoints[5][0] = [objLatLong].latLng.lat() - .05;
+            arrPoints[5][1] = [objLatLong].latLng.lng() + .00;
+
+            pathsPoly = 
+            [
+               new google.maps.LatLng(arrPoints[0][0],arrPoints[0][1]),
+               new google.maps.LatLng(arrPoints[1][0],arrPoints[1][1]),
+               new google.maps.LatLng(arrPoints[2][0],arrPoints[2][1]),
+               new google.maps.LatLng(arrPoints[3][0],arrPoints[3][1]),
+               new google.maps.LatLng(arrPoints[4][0],arrPoints[4][1]),
+               new google.maps.LatLng(arrPoints[5][0],arrPoints[5][1]),
+            ]
+                                 
+
+            return pathsPoly;
+         } */
+      </script>
+</body>
+</html>
