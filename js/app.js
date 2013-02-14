@@ -41,14 +41,14 @@
                if(conThing == true)
                {// if the user chooses to go here, 
                   numP1 = 0.008;
-                  numP2 = 0.060;            
+                  numP2 = 0.040;            
                   numToken ++;
                   alert(numToken);
                   pathsPoly = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP1); 
 
                   pathsPoly2 = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP2);
                   
-                  polyPoints = new google.maps.Polygon({ path: pathsPoly, strokeColor: "#3AA7DB", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DB", fillOpacity: 0.35 });
+                  polyPoints = new google.maps.Polygon({ path: pathsPoly, strokeColor: "#990000", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DB", fillOpacity: 0.35 });
                   polyPoints2 = new google.maps.Polygon({ path: pathsPoly2, strokeColor: "#3AA7DF", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DF", fillOpacity: 0.35 });
 
                   // Initiate map
@@ -63,6 +63,8 @@
                   if(conThing == true) {
                      alert("Resetting positions..."); 
                      initialize();
+                     conThing = false;
+                     numToken = 0;// reset choose token
                   }else{
                      alert("Let's continue, then.");
                   } 
