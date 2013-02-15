@@ -44,8 +44,9 @@
                   numP2 = 0.040;            
                   numToken ++;
                   alert(numToken);
+                  /*
+                  // make path
                   pathsPoly = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP1); 
-
                   pathsPoly2 = makePaths(objEv.latLng.lat(),objEv.latLng.lng(),numP2);
                   
                   polyPoints = new google.maps.Polygon({ path: pathsPoly, strokeColor: "#990000", strokeOpacity: 0.8, strokeWeight: 3, fillColor: "3AA7DB", fillOpacity: 0.35 });
@@ -54,7 +55,41 @@
                   // Initiate map
                   polyPoints.setMap(map);
                   polyPoints2.setMap(map);   
-               }else{
+                  */
+                  
+                  var polyZones = {};
+                  polyZones = {
+                     warning: new google.maps.LatLng(objEv.latLng.lat(),objEv.latLng.lng()),
+                     danger: new google.maps.LatLng(objEv.latLng.lat(),objEv.latLng.lng())
+                  };
+                  
+                  
+                   var polyProRZone = {
+                      strokeColor: "#FF0000",
+                      fillColor: "#FF0000",
+                      strokeOpacity: 0.8,
+                      strokeWeight: 2,
+                      fillOpacity: 0.35,
+                      map: map,
+                      center: polyZones.danger,
+                      radius: 640
+                   }
+
+                   var polyProBZone = {
+                      strokeColor: "#0000FF",
+                      strokeOpacity: 0.8,
+                      strokeWeight: 2,
+                      fillOpacity: 0.35,
+                      fillColor: "#0000FF",
+                      map: map,
+                      center: polyZones.warning,
+                      radius: 5500
+                   }
+
+                   cirDanger = new google.maps.Circle(polyProRZone);
+                   cirWarning = new google.maps.Circle(polyProBZone);
+                     
+            }else{
                }
             
             }else{
